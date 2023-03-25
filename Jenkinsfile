@@ -6,13 +6,7 @@ pipeline{
     agent any
     
     stages{
-        stage('Checkout SCM')
-        {
-            steps{
-                
-            git 'https://github.com/devopsking90/Industry-Project-One.git'
-            
-            }
+
         }
         stage('Compile')
         {
