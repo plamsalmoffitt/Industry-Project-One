@@ -2,6 +2,10 @@ node {
 	agent { label 'agent1' }
 	def application = "abc-tech-app1"
 	def dockerhubaccountid = "plamsal90"
+        def jdk = "myjava"
+        def maven = "mymaven"
+    	
+
 
 	stage('Clone repository') {
 		checkout scm
