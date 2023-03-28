@@ -16,4 +16,8 @@ node {
 	}
 			
 		}
+	stage('Deploy') {
+		sh ("docker run -d -p 81:8080 ${dockerhubaccountid}/${application}:${BUILD_NUMBER}")
+		
+	}
 }
