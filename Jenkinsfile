@@ -10,7 +10,7 @@ node {
 		app = docker.build("${dockerhubaccountid}/${application}:${BUILD_NUMBER}")
 	}
 		stage('Push image') {
-		withDockerRegistry([ credentialsId: "plamsal90", url: "" ]) {
+		withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
 		app.push()
 		app.push("latest")
 	}
