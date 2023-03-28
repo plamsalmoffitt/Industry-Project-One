@@ -6,5 +6,7 @@ node {
 	stage('Clone repository') {
 		checkout scm
 	}
-	
+		stage('Build image') {
+		app = docker.build("${dockerhubaccountid}/${application}:${BUILD_NUMBER}")
+	}
 }
