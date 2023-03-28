@@ -1,36 +1,10 @@
-pipeline{
-    tools{
-        jdk 'myjava'
-        maven 'mymaven'
-    }
-   agent { label 'agent1'}
-    
-    stages{
+node {
+	agent { label 'agent1' }
+	def application = "springbootapp"
+	def dockerhubaccountid = "plamsal90"
 
-        
-        stage('Compile')
-        {
-            steps{
-                
-                sh 'mvn compile'
-            }
-        }
-
-        
-    stage('UnitTesting')
-        {
-            steps{
-                
-                sh 'mvn test'
-            }
-        }  
-    
-          stage('Package')
-        {
-            steps{
-                
-                sh 'mvn package'
-            }
-        }
-	}	
-}	
+	stage('Clone repository') {
+		checkout scm
+	}
+	
+}
