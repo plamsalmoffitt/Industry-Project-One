@@ -10,6 +10,13 @@ node {
 	stage('Clone repository') {
 		checkout scm
 	}
+	 stage('Compile')
+        {
+            steps{
+                
+                sh 'mvn compile'
+            }
+        }
 		stage('Build image') {
 		app = docker.build("${dockerhubaccountid}/${application}:${BUILD_NUMBER}")
 	}
