@@ -3,7 +3,7 @@ pipeline{
         jdk 'myjava'
         maven 'mymaven'
     }
-    agent agent1
+    agent "agent1"
     
     stages{
 
