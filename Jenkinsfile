@@ -1,5 +1,5 @@
 node {
-	agent { label 'agent1' }
+	agent { label 'docker' }
 	def application = "javaapp"
 	def dockerhubaccountid = "plamsal90"
 
