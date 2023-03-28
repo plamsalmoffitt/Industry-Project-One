@@ -1,36 +1,32 @@
-pipeline{
-    tools{
-        jdk 'myjava'
-        maven 'mymaven'
-    }
-   agent { label 'agent1' }
-    
-    stages{
+node {
+	agent { label 'agent1' }
+	def application = "javaapp"
+	def dockerhubaccountid = "plamsal90"
 
-        
-        stage('Compile')
-        {
-            steps{
-                
-                sh 'mvn compile'
-            }
-        }
+	stage('Clone repository') {
+		checkout scm
+	}
 
-        
-    stage('UnitTesting')
-        {
-            steps{
-                
-                sh 'mvn test'
-            }
-        }  
-    
-          stage('Package')
-        {
-            steps{
-                
-                sh 'mvn package'
-            }
-        }
-	}	
-}	
+	stage('Build image') {
+		app = docker.build("${dockerhubaccountid}/${application}:${BUILD_NUMBER}")
+	}
+
+	stage('Push image') {
+		withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
+		app.push()
+		app.push("latest")
+	}
+		
+	}
+
+	stage('Deploy') {
+		sh ("docker run -d -p 81:8080 -v /var/log/:/var/log/ ${dockerhubaccountid}/${application}:${BUILD_NUMBER}")
+		
+	}
+
+	stage('Remove old images') {
+		// remove docker pld images
+		sh("docker rmi ${dockerhubaccountid}/${application}:latest -f")
+		
+   }
+}
