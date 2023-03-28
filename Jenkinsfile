@@ -1,37 +1,36 @@
-pipeline {
-  // Assign to docker agent(s) label, could also be 'any'
-  agent {
-    label 'agent1' 
-  }
-
-  stages {
-    stage('Docker node test') {
-      agent {
-        docker {
-          // Set both label and image
-          label 'agent1'
-          image 'node:7-alpine'
-          args '--name docker-node' // list any args
-        }
-      }
-      steps {
-        // Steps run in node:7-alpine docker container on docker agent
-        sh 'node --version'
-      }
+pipeline{
+    tools{
+        jdk 'myjava'
+        maven 'mymaven'
     }
+   agent { label 'agent1'}
+    
+    stages{
 
-    stage('Docker maven test') {
-      agent {
-        docker {
-          // Set both label and image
-          label 'docker'
-          image 'maven:3-alpine'
+        
+        stage('Compile')
+        {
+            steps{
+                
+                sh 'mvn compile'
+            }
         }
-      }
-      steps {
-        // Steps run in maven:3-alpine docker container on docker agent
-        sh 'mvn --version'
-      }
-    }
-  }
-} 
+
+        
+    stage('UnitTesting')
+        {
+            steps{
+                
+                sh 'mvn test'
+            }
+        }  
+    
+          stage('Package')
+        {
+            steps{
+                
+                sh 'mvn package'
+            }
+        }
+	}	
+}	
