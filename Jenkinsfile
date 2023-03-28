@@ -1,6 +1,6 @@
 node {
 	agent { label 'agent1' }
-	def application = "ABC-Tech-app1"
+	def application = "abc-tech-app1"
 	def dockerhubaccountid = "plamsal90"
 
 	stage('Clone repository') {
